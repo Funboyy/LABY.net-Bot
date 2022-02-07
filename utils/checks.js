@@ -1,4 +1,4 @@
-const { asyncNameSearch, asyncNameHistory ,asyncNameStatus } = require("./connection");
+const { asyncNameSearch, asyncNameHistory ,asyncNameStatus, asyncBadges } = require("./connection");
 
 function checkNameSearch(name, callback) {
     asyncNameSearch(name, function(args) {
@@ -69,4 +69,16 @@ function checkNameStatus(name, callback) {
     });
 }
 
-module.exports = { checkNameSearch, checkNameHistory , checkNameStatus }
+function checkBadget(name, callback) {
+    asyncBadges(name, function(args) {
+        if (args == null) {
+            callback(name, null, null);
+            return;
+        }
+
+        callback(args.user.user_name, args.user.uuid, args.json);
+        return;
+    });
+}
+
+module.exports = { checkNameSearch, checkNameHistory , checkNameStatus, checkBadget }

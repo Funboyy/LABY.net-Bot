@@ -23,6 +23,10 @@ function createEmbed(type, args) {
             {
                 name: "-history <Name>",
                 value: "Shows the name history of a user by his name"
+            },
+            {
+                name: "-badge <Name>",
+                value: "Shows all badges a user has"
             }
         );
 
@@ -71,7 +75,7 @@ function createEmbed(type, args) {
         embed.setTitle(`Name history of ${fixDiscord(args.name)}`)
             .setColor("GREY")
             .setURL(`https://laby.net/@${args.name}`)
-            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png`);
+            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`);
 
         for (var i = 0; i < Math.min(args.history.length, 25); i++) {
             embed.addFields(
@@ -88,7 +92,7 @@ function createEmbed(type, args) {
         for (var i = 1; i < Math.ceil(args.history.length / 25); i++) {
             var embedPage = new Discord.MessageEmbed()
                 .setColor("GREY")
-                .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png`);
+                .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`);
 
             for (var j = 25 * i; j < Math.min(args.history.length, 25 * i + 25); j++) {
                 embedPage.addFields(
@@ -121,7 +125,7 @@ function createEmbed(type, args) {
             .setColor("RED")
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
-            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png`)
+            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`)
             .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' is already in use.**`);
 
         embeds.push(embed);
@@ -130,7 +134,7 @@ function createEmbed(type, args) {
     if (type == "nameInDelay") {
         embed.setTitle(fixDiscord(args.name))
             .setColor("ORANGE")
-            .setURL(`https://laby.net/@${fixDiscord(args.name)}`)
+            .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
             .addFields(
                 {
@@ -140,6 +144,50 @@ function createEmbed(type, args) {
             );
 
         embeds.push(embed);
+    }
+
+    if (type == "noBadges") {
+        embed.setTitle(`Badges of ${fixDiscord(args.name)}`)
+            .setColor("ORANGE")
+            .setURL(`https://laby.net/@${args.name}`)
+            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`)
+            .setTimestamp()
+            .setDescription("This user does not hava any badges.");
+
+        embeds.push(embed);
+    }
+
+    if (type == "badge") {
+        embed.setTitle(`Badges of ${fixDiscord(args.name)}`)
+            .setColor("GREY")
+            .setURL(`https://laby.net/@${args.name}`)
+            .setThumbnail(`https://laby.net/texture/badge-2x/${args.badges[0].uuid}.png`);
+
+        embed.addFields(
+            {
+                name: fixDiscord(args.badges[0].name),
+                value: args.badges[0].description
+            }
+        );
+
+        embeds.push(embed);     
+
+        for (var i = 1; i < args.badges.length; i++) {
+            var embedPage = new Discord.MessageEmbed()
+                .setColor("GREY")
+                .setThumbnail(`https://laby.net/texture/badge-2x/${args.badges[i].uuid}.png`);
+
+            embedPage.addFields(
+                {
+                    name: fixDiscord(args.badges[i].name),
+                    value: args.badges[i].description
+                }
+            );
+
+            embeds.push(embedPage);
+        }  
+
+        embeds[embeds.length - 1].setTimestamp();
     }
 
     return embeds;

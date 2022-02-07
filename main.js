@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { createEmbed } = require("./utils/embed");
-const { checkNameSearch, checkNameHistory, checkNameStatus } = require("./utils/checks");
+const { checkNameSearch, checkNameHistory, checkNameStatus, checkBadget } = require("./utils/checks");
 
 const BOT = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -118,6 +118,43 @@ BOT.on("messageCreate", (message) => {
             }
 
             var embed = createEmbed("nameFree", { name });
+            message.channel.send({ embeds: embed });
+
+            return;
+        });
+    }
+
+    if (command[0].toLowerCase() == "badge") {
+        var name = command[1];
+
+        if (name.length < 3 || name.length > 16) {
+            var embed = createEmbed("invalidLength", { name });
+            message.channel.send({ embeds: embed });
+            return;
+        }
+
+        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
+            var embed = createEmbed("invalidName", { name });
+            message.channel.send({ embeds: embed });
+            return;
+        }
+
+        checkBadget(name, function(name, uuid, badges) {
+            if (uuid == null || badges == null) {
+                var embed = createEmbed("notFound", { name });
+                message.channel.send({ embeds: embed });
+
+                return;
+            }
+
+            if (badges.length == 0) {
+                var embed = createEmbed("noBadges", { name, uuid });
+                message.channel.send({ embeds: embed });
+
+                return;
+            }
+
+            var embed = createEmbed("badge", { name, uuid, badges });
             message.channel.send({ embeds: embed });
 
             return;
