@@ -125,7 +125,6 @@ function createEmbed(type, args) {
             .setColor("RED")
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
-            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`)
             .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' is already in use.**`);
 
         embeds.push(embed);
@@ -150,9 +149,8 @@ function createEmbed(type, args) {
         embed.setTitle(`Badges of ${fixDiscord(args.name)}`)
             .setColor("ORANGE")
             .setURL(`https://laby.net/@${args.name}`)
-            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`)
             .setTimestamp()
-            .setDescription("This user does not hava any badges.");
+            .setDescription(`**'${fixDiscord(args.name)}' does not have any badges.**`);
 
         embeds.push(embed);
     }
