@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { createEmbed } = require("./utils/embed");
-const { checkNameSearch, checkNameHistory, checkNameStatus, checkBadget } = require("./utils/checks");
+const { searchName, nameHistory, checkStatus, badges } = require("./utils/checks");
 
 const BOT = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -42,7 +42,7 @@ BOT.on("messageCreate", (message) => {
             return;
         }
 
-        checkNameSearch(name, function(name, results) {
+        searchName(name, function(name, results) {
             if (results == null) {
                 var embed = createEmbed("notFound", { name });
                 message.channel.send({ embeds: embed });
@@ -72,7 +72,7 @@ BOT.on("messageCreate", (message) => {
             return;
         }
 
-        checkNameHistory(name, function(name, uuid, history) {
+        nameHistory(name, function(name, uuid, history) {
             if (uuid == null || history == null) {
                 var embed = createEmbed("notFound", { name });
                 message.channel.send({ embeds: embed });
@@ -102,7 +102,7 @@ BOT.on("messageCreate", (message) => {
             return;
         }
 
-        checkNameStatus(name, function(name, uuid, date) {
+        checkStatus(name, function(name, uuid, date) {
             if (date != null) {
                 var embed = createEmbed("nameInDelay", { name, uuid, date });
                 message.channel.send({ embeds: embed });
@@ -139,7 +139,7 @@ BOT.on("messageCreate", (message) => {
             return;
         }
 
-        checkBadget(name, function(name, uuid, badges) {
+        badges(name, function(name, uuid, badges) {
             if (uuid == null || badges == null) {
                 var embed = createEmbed("notFound", { name });
                 message.channel.send({ embeds: embed });

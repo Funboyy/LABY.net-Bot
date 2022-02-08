@@ -30,7 +30,7 @@ function asyncUserByName(name, callback) {
     http.send(null);
 }
 
-function asyncNameSearch(name, callback) {
+function asyncSearch(name, callback) {
     var http = new XMLHttpRequest();
     http.onreadystatechange = function() {
         if (http.readyState == 4) {
@@ -56,7 +56,7 @@ function asyncNameHistory(uuid, callback) {
     http.send(null);
 }
 
-function asyncNameStatus(name, callback) {
+function asyncCheckStatus(name, callback) {
     var http = new XMLHttpRequest();
     http.onreadystatechange = function() {
         if (http.readyState == 4) {
@@ -82,4 +82,4 @@ function asyncBadges(uuid, callback) {
     http.send(null);
 }
 
-module.exports = { asyncUserByName, asyncNameSearch, asyncNameHistory, asyncNameStatus, asyncBadges };
+module.exports = { asyncUserByName, asyncSearch, asyncNameHistory, asyncCheckStatus, asyncBadges };
