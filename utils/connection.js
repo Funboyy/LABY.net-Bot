@@ -1,11 +1,28 @@
 const { XMLHttpRequest } = require("xhr2");
 
-function asyncNameSearch(name, callback) {
+function asyncUserByName(name, callback) {
     var http = new XMLHttpRequest();
     http.onreadystatechange = function() {
         if (http.readyState == 4) {
             var json = JSON.parse(http.responseText);
-            callback({ name, json });
+
+            if (args.json.results.length == 0) {
+                callback(null);
+                return;
+            }
+    
+            var json = args.json;
+            var user = null;
+            
+            for (var i = 0; i < json.results.length; i++) {
+                if (json.results[i].user_name.toLowerCase() != name.toLowerCase()) {
+                    continue;
+                } 
+    
+                user = json.results[i];
+            }
+
+            callback(user);
         }
     }
     http.open("GET", `https://laby.net/api/search/names/${name}`, true);
@@ -13,43 +30,30 @@ function asyncNameSearch(name, callback) {
     http.send(null);
 }
 
-function asyncNameHistory(name, callback) {
-    asyncNameSearch(name, function(args) {
-        if (args.json.results.length == 0) {
-
-            console.log(args.json.results);
-
-            callback(null);
-            return;
+function asyncNameSearch(name, callback) {
+    var http = new XMLHttpRequest();
+    http.onreadystatechange = function() {
+        if (http.readyState == 4) {
+            var json = JSON.parse(http.responseText);
+            callback(json);
         }
+    }
+    http.open("GET", `https://laby.net/api/search/names/${name}`, true);
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.send(null);
+}
 
-        var json = args.json;
-        var user = null;
-        
-        for (var i = 0; i < json.results.length; i++) {
-            if (json.results[i].user_name.toLowerCase() != name.toLowerCase()) {
-                continue;
-            } 
-
-            user = json.results[i];
+function asyncNameHistory(uuid, callback) {
+    var http = new XMLHttpRequest();
+    http.onreadystatechange = function() {
+        if (http.readyState == 4) {
+            var json = JSON.parse(http.responseText);
+            callback(json);
         }
-
-        if (user == null) {
-            callback(null);
-            return;
-        }
-
-        var http = new XMLHttpRequest();
-        http.onreadystatechange = function() {
-            if (http.readyState == 4) {
-                var json = JSON.parse(http.responseText);
-                callback({ name, json });
-            }
-        }
-        http.open("GET", `https://laby.net/api/user/${user.uuid}/get-snippet`, true);
-        http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
-        http.send(null);
-    });
+    }
+    http.open("GET", `https://laby.net/api/user/${uuid}/get-snippet`, true);
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.send(null);
 }
 
 function asyncNameStatus(name, callback) {
@@ -57,7 +61,7 @@ function asyncNameStatus(name, callback) {
     http.onreadystatechange = function() {
         if (http.readyState == 4) {
             var json = JSON.parse(http.responseText);
-            callback({ name, json });
+            callback(json);
         }
     }
     http.open("GET", `https://laby.net/api/search/get-previous-accounts/${name}`, true);
@@ -65,43 +69,17 @@ function asyncNameStatus(name, callback) {
     http.send(null);
 }
 
-function asyncBadges(name, callback) {
-    asyncNameSearch(name, function(args) {
-        if (args.json.results.length == 0) {
-
-            console.log(args.json.results);
-
-            callback(null);
-            return;
+function asyncBadges(uuid, callback) {
+    var http = new XMLHttpRequest();
+    http.onreadystatechange = function() {
+        if (http.readyState == 4) {
+            var json = JSON.parse(http.responseText);
+            callback(json);
         }
-
-        var json = args.json;
-        var user = null;
-        
-        for (var i = 0; i < json.results.length; i++) {
-            if (json.results[i].user_name.toLowerCase() != name.toLowerCase()) {
-                continue;
-            } 
-
-            user = json.results[i];
-        }
-
-        if (user == null) {
-            callback(null);
-            return;
-        }
-
-        var http = new XMLHttpRequest();
-        http.onreadystatechange = function() {
-            if (http.readyState == 4) {
-                var json = JSON.parse(http.responseText);
-                callback({ user, json });
-            }
-        }
-        http.open("GET", `https://laby.net/api/user/${user.uuid}/get-badges`, true);
-        http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
-        http.send(null);
-    });
+    }
+    http.open("GET", `https://laby.net/api/user/${uuid}/get-badges`, true);
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.send(null);
 }
 
-module.exports = { asyncNameSearch, asyncNameHistory, asyncNameStatus, asyncBadges };
+module.exports = { asyncUserByName, asyncNameSearch, asyncNameHistory, asyncNameStatus, asyncBadges };

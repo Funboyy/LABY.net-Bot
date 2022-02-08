@@ -1,39 +1,41 @@
-const { asyncNameSearch, asyncNameHistory ,asyncNameStatus, asyncBadges } = require("./connection");
+const { asyncUserByName, asyncNameSearch, asyncNameHistory ,asyncNameStatus, asyncBadges } = require("./connection");
 
 function checkNameSearch(name, callback) {
-    asyncNameSearch(name, function(args) {
-        if (args.json.results.length == 0) {
+    asyncNameSearch(name, function(json) {
+        if (json.results.length == 0) {
             callback(name, null);
             return;
         }
 
-        callback(name, args.json.results);
+        callback(name, json.results);
         return;
     });
 }
 
 function checkNameHistory(name, callback) {
-    asyncNameHistory(name, function(args) {
-        if (args == null) {
+    asyncUserByName(name, function(user) {
+        if (user == null) {
             callback(name, null, null);
             return;
         }
 
-        callback(args.json.user.user_name, args.json.user.uuid, args.json.name_history);
-        return;
+        asyncNameHistory(user.uuid, function(json) {
+            callback(user.user_name, user.uuid, json.name_history);
+            return;
+        });
     });
 }
 
 function checkNameStatus(name, callback) {
-    asyncNameStatus(name, function(args) {
+    asyncNameStatus(name, function(json) {
         var date = null;
 
-        if (args.json.users.length == 0) {
+        if (json.users.length == 0) {
             callback(name, null, null);
             return;
         }
 
-        var users = args.json.users;
+        var users = json.users;
 
         for (var i = 0; i < users.length; i++) {
             var user = users[i];
@@ -70,14 +72,16 @@ function checkNameStatus(name, callback) {
 }
 
 function checkBadget(name, callback) {
-    asyncBadges(name, function(args) {
-        if (args == null) {
+    asyncUserByName(name, function(user) {
+        if (user == null) {
             callback(name, null, null);
             return;
         }
 
-        callback(args.user.user_name, args.user.uuid, args.json);
-        return;
+        asyncBadges(user.uuid, function(json) {
+            callback(user.user_name, user.uuid, json);
+            return;
+        });
     });
 }
 
