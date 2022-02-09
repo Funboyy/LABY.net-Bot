@@ -6,12 +6,11 @@ function asyncUserByName(name, callback) {
         if (http.readyState == 4) {
             var json = JSON.parse(http.responseText);
 
-            if (args.json.results.length == 0) {
+            if (json.results.length == 0) {
                 callback(null);
                 return;
             }
     
-            var json = args.json;
             var user = null;
             
             for (var i = 0; i < json.results.length; i++) {
@@ -26,7 +25,7 @@ function asyncUserByName(name, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/search/names/${name}`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
     http.send(null);
 }
 
@@ -39,7 +38,7 @@ function asyncSearch(name, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/search/names/${name}`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
     http.send(null);
 }
 
@@ -52,7 +51,7 @@ function asyncNameHistory(uuid, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/user/${uuid}/get-snippet`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
     http.send(null);
 }
 
@@ -65,7 +64,7 @@ function asyncCheckStatus(name, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/search/get-previous-accounts/${name}`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
     http.send(null);
 }
 
@@ -78,7 +77,7 @@ function asyncBadges(uuid, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/user/${uuid}/get-badges`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; name-checker-bot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
     http.send(null);
 }
 
