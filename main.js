@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { createEmbed } = require("./utils/embed");
-const { searchName, nameHistory, checkStatus, badges } = require("./utils/checks");
+const { searchName, nameHistory, checkStatus, badges, skin } = require("./utils/checks");
 
 const BOT = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -155,6 +155,36 @@ BOT.on("messageCreate", (message) => {
             }
 
             var embed = createEmbed("badge", { name, uuid, badges });
+            message.channel.send({ embeds: embed });
+
+            return;
+        });
+    }
+
+    if (command[0].toLowerCase() == "skin") {
+        var name = command[1];
+
+        if (name.length < 3 || name.length > 16) {
+            var embed = createEmbed("invalidLength", { name });
+            message.channel.send({ embeds: embed });
+            return;
+        }
+
+        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
+            var embed = createEmbed("invalidName", { name });
+            message.channel.send({ embeds: embed });
+            return;
+        }
+
+        skin(name, function(name, uuid) {
+            if (uuid == null) {
+                var embed = createEmbed("notFound", { name });
+                message.channel.send({ embeds: embed });
+
+                return;
+            }
+
+            var embed = createEmbed("skin", { name, uuid });
             message.channel.send({ embeds: embed });
 
             return;

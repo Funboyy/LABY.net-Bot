@@ -27,6 +27,10 @@ function createEmbed(type, args) {
             {
                 name: "-badge <Name>",
                 value: "Shows all badges a user has"
+            },
+            {
+                name: "-skin <Name>",
+                value: "Shows the current skin of a user"
             }
         );
 
@@ -186,6 +190,16 @@ function createEmbed(type, args) {
         }  
 
         embeds[embeds.length - 1].setTimestamp();
+    }
+
+    if (type == "skin") {
+        embed.setTitle(`Skin of ${fixDiscord(args.name)}`)
+            .setColor("GREY")
+            .setURL(`https://laby.net/@${args.name}`)
+            .setTimestamp()
+            .setImage(`https://laby.net/texture/profile/body/${args.uuid}.png?size=256`);
+
+        embeds.push(embed);
     }
 
     return embeds;

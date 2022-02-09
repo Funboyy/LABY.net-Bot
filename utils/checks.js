@@ -1,4 +1,4 @@
-const { asyncUserByName, asyncSearch, asyncNameHistory ,asyncCheckStatus, asyncBadges } = require("./connection");
+const { asyncUserByName, asyncSearch, asyncNameHistory, asyncCheckStatus, asyncBadges } = require("./connection");
 
 function searchName(name, callback) {
     asyncNameSearch(name, function(json) {
@@ -85,4 +85,16 @@ function badges(name, callback) {
     });
 }
 
-module.exports = { searchName, nameHistory , checkStatus, badges }
+function skin(name, callback) {
+    asyncUserByName(name, function(user) {
+        if (user == null) {
+            callback(name, null);
+            return;
+        }
+
+        callback(user.user_name, user.uuid);
+        return;
+    });
+}
+
+module.exports = { searchName, nameHistory , checkStatus, badges, skin }
