@@ -1,7 +1,7 @@
 const { asyncUserByName, asyncSearch, asyncNameHistory, asyncCheckStatus, asyncBadges } = require("./connection");
 
 function searchName(name, callback) {
-    asyncNameSearch(name, function(json) {
+    asyncSearch(name, function(json) {
         if (json.results.length == 0) {
             callback(name, null);
             return;
