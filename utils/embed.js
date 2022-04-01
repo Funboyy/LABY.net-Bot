@@ -4,6 +4,8 @@ function createEmbed(type, args) {
     var embeds = [];
     var embed = new Discord.MessageEmbed();
 
+    var time = new Date().getTime();
+
     if (type == "help") {
         embed.setTitle("LABY.net - Commands")
             .setColor("DARK_BLUE")
@@ -79,7 +81,7 @@ function createEmbed(type, args) {
         embed.setTitle(`Name history of ${fixDiscord(args.name)}`)
             .setColor("GREY")
             .setURL(`https://laby.net/@${args.name}`)
-            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`);
+            .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256&time=${time}`);
 
         for (var i = 0; i < Math.min(args.history.length, 25); i++) {
             embed.addFields(
@@ -96,7 +98,7 @@ function createEmbed(type, args) {
         for (var i = 1; i < Math.ceil(args.history.length / 25); i++) {
             var embedPage = new Discord.MessageEmbed()
                 .setColor("GREY")
-                .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256`);
+                .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256&time=${time}`);
 
             for (var j = 25 * i; j < Math.min(args.history.length, 25 * i + 25); j++) {
                 embedPage.addFields(
@@ -197,7 +199,7 @@ function createEmbed(type, args) {
             .setColor("GREY")
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
-            .setImage(`https://laby.net/texture/profile/body/${args.uuid}.png?size=256`);
+            .setImage(`https://laby.net/texture/profile/body/${args.uuid}.png?size=256&time=${time}`);
 
         embeds.push(embed);
     }
