@@ -3,7 +3,6 @@
   "version": "1.0",
   "description": "",
   "main": "ticketBot.js",
-  "types": "config.js",
   "scripts": {
     "start": "node main.js"
   },
