@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const { createEmbed } = require("./utils/embed");
 const { searchName, nameHistory, checkStatus, badges, skin } = require("./utils/checks");
+const settings = require("./settings.js");
 
 const BOT = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -192,4 +193,4 @@ BOT.on("messageCreate", (message) => {
     }
 });
 
-BOT.login("OTM4NDc1ODM5MjQ5NjA0NjA5.Yfq1vA.aoSlipXQ1ZgAbaW2KDBieUSihXA");
+BOT.login(settings.token);
