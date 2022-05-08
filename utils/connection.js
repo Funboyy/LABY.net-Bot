@@ -1,5 +1,7 @@
 const { XMLHttpRequest } = require("xhr2");
 
+const userAgent = "Mozilla/5.0 (compatible; LABY.net-Bot/1.0; +https://github.com/Funboyy/LABY.net-Bot)";
+
 function asyncUserByName(name, callback) {
     var http = new XMLHttpRequest();
     http.onreadystatechange = function() {
@@ -25,7 +27,7 @@ function asyncUserByName(name, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/search/names/${name}`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", userAgent);
     http.send(null);
 }
 
@@ -38,7 +40,7 @@ function asyncSearch(name, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/search/names/${name}`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", userAgent);
     http.send(null);
 }
 
@@ -51,7 +53,7 @@ function asyncNameHistory(uuid, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/user/${uuid}/get-snippet`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", userAgent);
     http.send(null);
 }
 
@@ -64,7 +66,7 @@ function asyncCheckStatus(name, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/search/get-previous-accounts/${name}`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", userAgent);
     http.send(null);
 }
 
@@ -77,7 +79,7 @@ function asyncBadges(uuid, callback) {
         }
     }
     http.open("GET", `https://laby.net/api/user/${uuid}/get-badges`, true);
-    http.setRequestHeader("User-Agent", "Mozilla/5.0 (compatible; LabyNetBot/1.0; +https://discord.com/users/288772430221148162)");
+    http.setRequestHeader("User-Agent", userAgent);
     http.send(null);
 }
 
