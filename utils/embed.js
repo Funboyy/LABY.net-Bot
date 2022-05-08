@@ -86,9 +86,9 @@ function createEmbed(type, args) {
         for (var i = 0; i < Math.min(args.history.length, 25); i++) {
             embed.addFields(
                 {
-                    name: fixDiscord(args.history[i].user_name),
-                    value: args.history[i].updated_at == null ? 
-                        "-" : `<t:${new Date(args.history[i].updated_at + "+00:00").getTime() / 1000}>`,
+                    name: fixDiscord(args.history[i].username),
+                    value: args.history[i].changed_at == null ? 
+                        "-" : `<t:${new Date(args.history[i].changed_at + "+00:00").getTime() / 1000}>`,
                 }
             );
         }
@@ -103,9 +103,9 @@ function createEmbed(type, args) {
             for (var j = 25 * i; j < Math.min(args.history.length, 25 * i + 25); j++) {
                 embedPage.addFields(
                     {
-                        name: fixDiscord(args.history[j].user_name),
-                        value: args.history[j].updated_at == null ? 
-                            "-" : `<t:${new Date(args.history[j].updated_at + "+00:00").getTime() / 1000}>`,
+                        name: fixDiscord(args.history[j].username),
+                        value: args.history[j].changed_at == null ? 
+                            "-" : `<t:${new Date(args.history[j].changed_at + "+00:00").getTime() / 1000}>`,
                     }
                 );
             }
