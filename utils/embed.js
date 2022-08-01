@@ -88,7 +88,7 @@ function createEmbed(type, args) {
                 {
                     name: fixDiscord(args.history[i].username),
                     value: args.history[i].changed_at == null ? 
-                        "-" : `<t:${new Date(args.history[i].changed_at + "+00:00").getTime() / 1000}>`,
+                        "-" : `<t:${new Date(args.history[i].changed_at).getTime() / 1000}>`,
                 }
             );
         }
