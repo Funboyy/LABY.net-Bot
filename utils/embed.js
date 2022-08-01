@@ -1,37 +1,37 @@
-const Discord = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 function createEmbed(type, args) {
     var embeds = [];
-    var embed = new Discord.MessageEmbed();
+    var embed = new EmbedBuilder();
 
     var time = new Date().getTime();
 
     if (type == "help") {
         embed.setTitle("LABY.net - Commands")
-            .setColor("DARK_BLUE")
+            .setColor(0x0A56A5)
             .setURL(`https://laby.net/`)
             .setTimestamp()
             .setThumbnail("https://cdn.discordapp.com/icons/866584873451520010/266b2af803271d122a57729cd28b7f4d.webp");
 
         embed.addFields(
             {
-                name: "-search <Name>",
+                name: "/search <Name>",
                 value: "Searches for a user by his name"
             },
             {
-                name: "-check <Name>",
+                name: "/check <Name>",
                 value: "Checks the status of a name"
             },
             {
-                name: "-history <Name>",
+                name: "/history <Name>",
                 value: "Shows the name history of a user by his name"
             },
             {
-                name: "-badge <Name>",
+                name: "/badge <Name>",
                 value: "Shows all badges a user has"
             },
             {
-                name: "-skin <Name>",
+                name: "/skin <Name>",
                 value: "Shows the current skin of a user"
             }
         );
@@ -40,21 +40,21 @@ function createEmbed(type, args) {
     }
 
     if (type == "invalidLength") {
-        embed.setColor("RED")
+        embed.setColor(0xff2c2c)
             .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' has a invalid length.**`);
 
         embeds.push(embed);
     }
 
     if (type == "invalidName") {
-        embed.setColor("RED")
+        embed.setColor(0xff2c2c)
             .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' contains forbidden characters.**`);
 
         embeds.push(embed);
     }
 
     if (type == "notFound") {
-        embed.setColor("RED")
+        embed.setColor(0xff2c2c)
             .setDescription(`**Could not find any users matching '${fixDiscord(args.name)}'.**`);
 
         embeds.push(embed);
@@ -62,7 +62,7 @@ function createEmbed(type, args) {
 
     if (type == "search") {
         embed.setTitle(`Users matching '${fixDiscord(args.name)}'`)
-            .setColor("GREY")
+            .setColor(0xbebebe)
             .setTimestamp();
 
         for (var i = 0; i < args.results.length; i++) {
@@ -79,7 +79,7 @@ function createEmbed(type, args) {
 
     if (type == "history") {
         embed.setTitle(`Name history of ${fixDiscord(args.name)}`)
-            .setColor("GREY")
+            .setColor(0xbebebe)
             .setURL(`https://laby.net/@${args.name}`)
             .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256&time=${time}`);
 
@@ -96,8 +96,8 @@ function createEmbed(type, args) {
         embeds.push(embed);
         
         for (var i = 1; i < Math.ceil(args.history.length / 25); i++) {
-            var embedPage = new Discord.MessageEmbed()
-                .setColor("GREY")
+            var embedPage = new EmbedBuilder()
+                .setColor(0xbebebe)
                 .setThumbnail(`https://laby.net/texture/profile/head/${args.uuid}.png?size=256&time=${time}`);
 
             for (var j = 25 * i; j < Math.min(args.history.length, 25 * i + 25); j++) {
@@ -105,7 +105,7 @@ function createEmbed(type, args) {
                     {
                         name: fixDiscord(args.history[j].username),
                         value: args.history[j].changed_at == null ? 
-                            "-" : `<t:${new Date(args.history[j].changed_at + "+00:00").getTime() / 1000}>`,
+                            "-" : `<t:${new Date(args.history[j].changed_at).getTime() / 1000}>`,
                     }
                 );
             }
@@ -118,7 +118,7 @@ function createEmbed(type, args) {
 
     if (type == "nameFree") {
         embed.setTitle(fixDiscord(args.name))
-            .setColor("GREEN")
+            .setColor(0x06c258)
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
             .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' is free.**`);
@@ -128,7 +128,7 @@ function createEmbed(type, args) {
 
     if (type == "nameAlreadyUsed") {
         embed.setTitle(fixDiscord(args.name))
-            .setColor("RED")
+            .setColor(0xff2c2c)
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
             .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' is already in use.**`);
@@ -138,7 +138,7 @@ function createEmbed(type, args) {
 
     if (type == "nameInDelay") {
         embed.setTitle(fixDiscord(args.name))
-            .setColor("ORANGE")
+            .setColor(0xff781f)
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
             .addFields(
@@ -153,7 +153,7 @@ function createEmbed(type, args) {
 
     if (type == "noBadges") {
         embed.setTitle(`Badges of ${fixDiscord(args.name)}`)
-            .setColor("ORANGE")
+            .setColor(0xff781f)
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
             .setDescription(`**'${fixDiscord(args.name)}' does not have any badges.**`);
@@ -163,7 +163,7 @@ function createEmbed(type, args) {
 
     if (type == "badge") {
         embed.setTitle(`Badges of ${fixDiscord(args.name)}`)
-            .setColor("GREY")
+            .setColor(0xbebebe)
             .setURL(`https://laby.net/@${args.name}`)
             .setThumbnail(`https://laby.net/texture/badge-2x/${args.badges[0].uuid}.png`);
 
@@ -178,7 +178,7 @@ function createEmbed(type, args) {
 
         for (var i = 1; i < args.badges.length; i++) {
             var embedPage = new Discord.MessageEmbed()
-                .setColor("GREY")
+                .setColor(0xbebebe)
                 .setThumbnail(`https://laby.net/texture/badge-2x/${args.badges[i].uuid}.png`);
 
             embedPage.addFields(
@@ -196,7 +196,7 @@ function createEmbed(type, args) {
 
     if (type == "skin") {
         embed.setTitle(`Skin of ${fixDiscord(args.name)}`)
-            .setColor("GREY")
+            .setColor(0xbebebe)
             .setURL(`https://laby.net/@${args.name}`)
             .setTimestamp()
             .setImage(`https://laby.net/texture/profile/body/${args.uuid}.png?size=256&time=${time}`);
