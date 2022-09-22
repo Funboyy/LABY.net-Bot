@@ -41,7 +41,7 @@ client.on('interactionCreate', async interaction => {
     const { commandName } = interaction;
 
     if (commandName === 'help') {
-        var embed = createEmbed("help", {});
+        const embed = createEmbed("help", {});
         interaction.reply({ embeds: embed });
 
         return;
@@ -50,16 +50,9 @@ client.on('interactionCreate', async interaction => {
     if (commandName === 'search') {
         const name = interaction.options.getString('name', true);
 
-        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
-            var embed = createEmbed("invalidName", { name });
-            interaction.reply({ embeds: embed });
-
-            return;
-        }
-
         searchName(name, function(name, results) {
             if (results == null) {
-                var embed = createEmbed("notFound", { name });
+                const embed = createEmbed("notFound", { name });
                 interaction.reply({ embeds: embed });
 
                 return;
@@ -76,14 +69,7 @@ client.on('interactionCreate', async interaction => {
         const name = interaction.options.getString('name', true);
 
         if (name.length < 3 || name.length > 16) {
-            var embed = createEmbed("invalidLength", { name });
-            interaction.reply({ embeds: embed });
-
-            return;
-        }
-
-        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
-            var embed = createEmbed("invalidName", { name });
+            const embed = createEmbed("invalidLength", { name });
             interaction.reply({ embeds: embed });
 
             return;
@@ -91,20 +77,20 @@ client.on('interactionCreate', async interaction => {
 
         checkStatus(name, function(name, uuid, date) {
             if (date != null) {
-                var embed = createEmbed("nameInDelay", { name, uuid, date });
+                const embed = createEmbed("nameInDelay", { name, uuid, date });
                 interaction.reply({ embeds: embed });
 
                 return;
             }
 
             if (uuid != null) {
-                var embed = createEmbed("nameAlreadyUsed", { name, uuid });
+                const embed = createEmbed("nameAlreadyUsed", { name, uuid });
                 interaction.reply({ embeds: embed });
 
                 return;
             }
 
-            var embed = createEmbed("nameFree", { name });
+            const embed = createEmbed("nameFree", { name });
             interaction.reply({ embeds: embed });
 
             return;
@@ -116,13 +102,6 @@ client.on('interactionCreate', async interaction => {
 
         if (name.length < 3 || name.length > 16) {
             var embed = createEmbed("invalidLength", { name });
-            interaction.reply({ embeds: embed });
-
-            return;
-        }
-
-        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
-            var embed = createEmbed("invalidName", { name });
             interaction.reply({ embeds: embed });
 
             return;
@@ -148,13 +127,6 @@ client.on('interactionCreate', async interaction => {
 
         if (name.length < 3 || name.length > 16) {
             var embed = createEmbed("invalidLength", { name });
-            interaction.reply({ embeds: embed });
-
-            return;
-        }
-
-        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
-            var embed = createEmbed("invalidName", { name });
             interaction.reply({ embeds: embed });
 
             return;
@@ -187,13 +159,6 @@ client.on('interactionCreate', async interaction => {
 
         if (name.length < 3 || name.length > 16) {
             var embed = createEmbed("invalidLength", { name });
-            interaction.reply({ embeds: embed });
-
-            return;
-        }
-
-        if (!name.match(/^[A-Za-z0-9_]+$/g)) {
-            var embed = createEmbed("invalidName", { name });
             interaction.reply({ embeds: embed });
 
             return;
