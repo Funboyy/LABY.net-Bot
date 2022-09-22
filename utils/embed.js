@@ -46,13 +46,6 @@ function createEmbed(type, args) {
         embeds.push(embed);
     }
 
-    if (type == "invalidName") {
-        embed.setColor(0xff2c2c)
-            .setDescription(`**The Minecraft name '${fixDiscord(args.name)}' contains forbidden characters.**`);
-
-        embeds.push(embed);
-    }
-
     if (type == "notFound") {
         embed.setColor(0xff2c2c)
             .setDescription(`**Could not find any users matching '${fixDiscord(args.name)}'.**`);
@@ -177,7 +170,7 @@ function createEmbed(type, args) {
         embeds.push(embed);     
 
         for (var i = 1; i < args.badges.length; i++) {
-            var embedPage = new Discord.MessageEmbed()
+            var embedPage = new EmbedBuilder()
                 .setColor(0xbebebe)
                 .setThumbnail(`https://laby.net/texture/badge-2x/${args.badges[i].uuid}.png`);
 
