@@ -1,6 +1,6 @@
 {
   "name": "labynet-bot",
-  "version": "1.0",
+  "version": "1.1",
   "description": "",
   "main": "ticketBot.js",
   "scripts": {
@@ -9,9 +9,9 @@
   "author": "Funboyy",
   "license": "GNU GENERAL PUBLIC LICENSE v3.0",
   "dependencies": {
-    "@discordjs/builders": "^0.11.0",
-    "@discordjs/rest": "^1.0.1",
-    "discord.js": "^14.1.2",
+    "@discordjs/builders": "^1.2.0",
+    "@discordjs/rest": "^1.1.0",
+    "discord.js": "^14.3.0",
     "xhr2": "^0.2.1"
   }
 }
